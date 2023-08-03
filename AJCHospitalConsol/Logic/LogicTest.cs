@@ -8,5 +8,6 @@ namespace AJCHospitalConsol.Logic
 {
     internal class LogicTest
     {
+        string s = "toto";
     }
 }

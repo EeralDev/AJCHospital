@@ -1,0 +1,76 @@
+CREATE DATABASE AJCHospital;
+GO
+USE AJCHospital;
+GO
+/****** Object:  Table [dbo].[Consultation_T]    Script Date: 04/08/2023 00:01:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Consultation_T](
+	[ConsultationID] [int] IDENTITY(1,1) NOT NULL,
+	[PatID] [int] NOT NULL,
+	[DocID] [int] NOT NULL,
+	[StartTime] [date] NOT NULL,
+	[EndTime] [date] NOT NULL,
+	[Price] [float] NOT NULL,
+ CONSTRAINT [PK_Consultation_T] PRIMARY KEY CLUSTERED 
+(
+	[ConsultationID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Patient_T]    Script Date: 04/08/2023 00:01:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Patient_T](
+	[PatientID] [int] IDENTITY(1,1) NOT NULL,
+	[SocialSecurityID] [varchar](100) NOT NULL,
+	[FirstName] [varchar](100) NOT NULL,
+	[LastName] [varchar](100) NOT NULL,
+	[Age] [int] NOT NULL,
+	[Adress] [varchar](100) NULL,
+ CONSTRAINT [PK_Patient_T] PRIMARY KEY CLUSTERED 
+(
+	[PatientID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UK_SocialSecurityID_Patient_T] UNIQUE NONCLUSTERED 
+(
+	[SocialSecurityID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User_T]    Script Date: 04/08/2023 00:01:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User_T](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](100) NOT NULL,
+	[Password] [varchar](100) NOT NULL,
+	[FirstName] [varchar](100) NOT NULL,
+	[LastName] [varchar](100) NOT NULL,
+	[EmpCode] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_User_T] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [fk_DoctorID] FOREIGN KEY([DocID])
+REFERENCES [dbo].[User_T] ([UserID])
+GO
+ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [fk_DoctorID]
+GO
+ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [fk_PatientID] FOREIGN KEY([PatID])
+REFERENCES [dbo].[Patient_T] ([PatientID])
+GO
+ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [fk_PatientID]
+GO
+USE [master]
+GO
+ALTER DATABASE [AJCHospitalProto] SET  READ_WRITE 
+GO

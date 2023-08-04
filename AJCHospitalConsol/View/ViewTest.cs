@@ -8,5 +8,6 @@ namespace AJCHospitalConsol.View
 {
     internal class ViewTest
     {
+        string str = "hello";
     }
 }

@@ -10,9 +10,6 @@ namespace AJCHospitalConsol
     internal class Program
     {
         static void Main(string[] args)
-<<<<<<< HEAD
-        { }
-=======
         {
             //new DAL.DALTest().testDAOUser();
 
@@ -29,6 +26,5 @@ namespace AJCHospitalConsol
 
 
         }
->>>>>>> View
     }
 }

@@ -10,8 +10,6 @@ namespace AJCHospitalConsol
     internal class Program
     {
         static void Main(string[] args)
-        {
-            new DALTest().testDAOUser();
-        }
+        { }
     }
 }

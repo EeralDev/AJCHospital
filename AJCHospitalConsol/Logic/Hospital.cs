@@ -1,9 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using AJCHospitalConsol.DAL;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,28 +17,55 @@ namespace AJCHospitalConsol.Logic
 
     internal class Hospital : IObserver
     {
-        private static readonly Lazy<Hospital> lazyInstanceHospital = new Lazy<Hospital>(() => new Hospital());
+        //la classe Hopital utilise le modèle Singleton avec un verrouillage
+        //explicite pour garantir un accès thread-safe à la liste de patients.
+        //Les méthodes pour ajouter un patient et obtenir la liste de patients
+        //sont protégées par des verrouillages pour assurer la sécurité
+        //dans un environnement multithread.
+
+        private static readonly Lazy<Hospital> lazyInstanceHospital = 
+            new Lazy<Hospital>(() => new Hospital());
+        private static readonly object lockObject = new object();
+
         // attributs
         // Propriété statique pour accéder à l'instance unique de l'hôpital
-        private static Hospital InstanceHospital => lazyInstanceHospital.Value;
+        public static Hospital InstanceHospital => lazyInstanceHospital.Value;
         private string _nameHospital;
-        private UnikQueuePatient queuePatients;
+        private QueuePatients _queuePatients;
         //private List<Doctors> _doctorList;
 
-        public Secretary Secretary { get; private set; }
-        
-        // constructeurs
-        public Hospital() 
+        // Les patients sont censés être connu dans les systèmes de
+        // l’hôpital donc extrait de la base de données DAO Patients
+        // la v ue est censé me forunir un patient a ajouter
+        // pour ensuite prétendre être rajouté à la file d’attente
+
+        public Secretary OneSecretary { get; }
+
+        //public void AddPatientInQueue(Patient patient)
+        //{
+        //    _queuePatients.AddPatient(patient);
+        //}
+        public void DisplayNextPatient()
         {
-            // utilisation des singletons UnikQueuePatient et Secretary
-            // dans le constructeur de la classe Hospital
-            this.queuePatients = UnikQueuePatient.InstanceQueuePatient;
-            Secretary = Secretary.InstanceSecretary;
+            Patient nextPatient = _queuePatients.NextPatient();
+            // Affiche les informations du prochain patient
+            nextPatient.ToString();
         }
+        public void DisplayQueuePatients()
+        {
+            // Utilisation de la méthode ToString de la classe Patient
+            _queuePatients.ToString();
+        }
+
+        // constructeurs
+        public Hospital() {}
         public Hospital(string nameHospital)
         {
             this._nameHospital = nameHospital;
-            //User = new User();
+        }
+        public void Update(ISubject subject)
+        {
+            throw new NotImplementedException();
         }
     }
 }

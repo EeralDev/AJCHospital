@@ -11,12 +11,15 @@ namespace AJCHospitalConsol.Logic
         public string Id { get; }
         public string NameDoctor { get; set; }
         public int NumeroRoom { get; set; }
-    }
 
+        public void Update(ISubject subject)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public enum Room
     {
         Room1=1,
         Room2=2
     }
-}
 }

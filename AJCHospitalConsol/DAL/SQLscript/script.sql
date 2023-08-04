@@ -2,14 +2,15 @@ CREATE DATABASE AJCHospital;
 GO
 USE [AJCHospital]
 GO
-/****** Object:  Table [dbo].[Consultation_T]    Script Date: 04/08/2023 03:40:05 ******/
+/****** Object:  Table [dbo].[Consultation_T]    Script Date: 04/08/2023 04:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Consultation_T](
 	[ConsultationID] [int] IDENTITY(1,1) NOT NULL,
-	[PatID] [varchar](100) NOT NULL,
+	[PatID] [int] NOT NULL,
+	[PatSocialSecurityID] [varchar](100) NOT NULL,
 	[DocID] [int] NOT NULL,
 	[DocName] [varchar](100) NOT NULL,
 	[StartTime] [date] NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE [dbo].[Consultation_T](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Patient_T]    Script Date: 04/08/2023 03:40:05 ******/
+/****** Object:  Table [dbo].[Patient_T]    Script Date: 04/08/2023 04:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -43,7 +44,7 @@ CREATE TABLE [dbo].[Patient_T](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User_T]    Script Date: 04/08/2023 03:40:05 ******/
+/****** Object:  Table [dbo].[User_T]    Script Date: 04/08/2023 04:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -65,15 +66,15 @@ CREATE TABLE [dbo].[User_T](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [FK_Consultation_Patient] FOREIGN KEY([PatID])
-REFERENCES [dbo].[Patient_T] ([SocialSecurityID])
+ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [FK_Patient_Consultation] FOREIGN KEY([PatID])
+REFERENCES [dbo].[Patient_T] ([PatientID])
 GO
-ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [FK_Consultation_Patient]
+ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [FK_Patient_Consultation]
 GO
-ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [FK_Consultation_User] FOREIGN KEY([DocID])
+ALTER TABLE [dbo].[Consultation_T]  WITH CHECK ADD  CONSTRAINT [FK_User_Consultation] FOREIGN KEY([DocID])
 REFERENCES [dbo].[User_T] ([UserID])
 GO
-ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [FK_Consultation_User]
+ALTER TABLE [dbo].[Consultation_T] CHECK CONSTRAINT [FK_User_Consultation]
 GO
 USE [master]
 GO

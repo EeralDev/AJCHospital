@@ -3,7 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-#Ajout des fichier lié a EntityFrameWork
+# Ajout des fichiers liés a EntityFrameWork
+
 *.config
 *.edmx
 *.Context.tt

@@ -48,5 +48,19 @@ namespace AJCHospitalConsol.Controller
         {
             return new DAOConsultation().Insert(consultations, out List<int> IDs);
         }
+
+        //TODO : A tester
+
+        public List<Consultation_T> getPatientConsultation (int patientID)
+        {
+            return new DAOPatient().SelectById(patientID).Consultation_T.ToList();
+        }
+
+        //TODO : A tester
+
+        public List<Consultation_T> getDoctorConsultation(int userID)
+        {
+            return new DAOUser().SelectById(userID).Consultation_T.ToList();
+        }
     }
 }

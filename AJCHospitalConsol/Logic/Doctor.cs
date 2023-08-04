@@ -17,11 +17,9 @@ namespace AJCHospitalConsol.Logic
             throw new NotImplementedException();
         }
     }
-
     public enum Room
     {
         Room1=1,
         Room2=2
     }
 }
-

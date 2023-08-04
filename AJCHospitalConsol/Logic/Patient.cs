@@ -9,7 +9,7 @@ namespace AJCHospitalConsol.Logic
     internal class Patient
     {
         // Observateur (Patient) qui observe l'hopital et réciproquement
-        private int _id;
+        private int _patientID;
         private string _socialSecurityID;
         private string _firstname;
         private string _lastname;
@@ -18,46 +18,42 @@ namespace AJCHospitalConsol.Logic
         private string _adress;
 
         // properties
-        public int Id
+
+        // Pas de setters properties pour ne pas etre en défaut par rapport
+        // a la base de données DAL.DAO
+        public int PatientID
         {
-            get { return _id; }
+            get { return _patientID; }
         }
         public string SocialSecurityID
         {
             get { return _socialSecurityID; }
-            set { _socialSecurityID = value; }
         }
         public int Age
         {
             get { return _age; }
-            set { _age = value; }
         }
         public int Tel
         {
             get { return _tel; }
-            set { _tel = value; }
         }
         public string Lastname
         {
             get { return _lastname; }
-            set { _lastname = value; }
         }
         public string Firstname
         {
             get { return _firstname; }
-            set { _firstname = value; }
         }
         public string Adress
         {
             get { return _adress; }
-            set { _adress = value; }
         }
-
         // constructeurs
         public Patient() { }
-        public Patient(int id, string socialSecurityID, string firstname, string lastname, int tel) : this()
+        public Patient(int patientID, string socialSecurityID, string firstname, string lastname, int tel) : this()
         {
-            this._id = id;
+            this._patientID = patientID;
             this._socialSecurityID = socialSecurityID;
             this._firstname = firstname;
             this._lastname = lastname;
@@ -76,7 +72,7 @@ namespace AJCHospitalConsol.Logic
 
         public override string ToString()
         {
-            string response = $"Eléments du patient : id : {Id} \t n° secu = {SocialSecurityID}\n";
+            string response = $"Eléments du patient : id : {PatientID} \t n° secu = {SocialSecurityID}\n";
             response += $" nom : {Lastname} , prenom : {Firstname} , telephone : {Tel}\n";
             response += $" age : {Age} , adresse : {Adress}\n";
 

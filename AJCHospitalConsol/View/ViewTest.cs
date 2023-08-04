@@ -21,16 +21,24 @@ namespace AJCHospitalConsol.View
 
             Console.WriteLine("*************** HOPITAL******************");
 
-            int nb1;
-            string login_user = "df";
-            string mp_user = "15465";
+            int nb1 = 0; 
+           
             bool sortie = false;
             do
             {
-                Console.WriteLine("1-Connexion");
-                Console.WriteLine("2-Quitter");
-                nb1 = Convert.ToInt32(Console.ReadLine());
-             
+
+                try
+                {
+                    Console.WriteLine("1-Connexion");
+                    Console.WriteLine("2-Quitter");
+                    nb1 = Convert.ToInt32(Console.ReadLine());
+                }
+                catch(FormatException )
+                {
+                    Console.WriteLine("Erreur de saisie");
+                }
+            
+
 
                 if (nb1 == 2)
                 {
@@ -49,17 +57,17 @@ namespace AJCHospitalConsol.View
                 {
                    
                     //  ecranConnexion();
-                    TestConnexion(null);
+                    TestConnexion();
                 }
 
 
-            } while ((nb1!=2||sortie == false));
+            } while (sortie == false);
 
         }
 
-        public  void TestConnexion(User a1)
+        public  void TestConnexion()
         {
-            string rep = " ";
+          
 
             string login_user;
 
@@ -83,8 +91,8 @@ namespace AJCHospitalConsol.View
                     Console.WriteLine("Entrez votre mot de passe");
                     password_user = Console.ReadLine();
                     b = new myController().Authentication(login_user, password_user);
-                    Console.WriteLine(b == null);
-                    Console.ReadLine();
+                 
+                 
 
 
 
@@ -119,16 +127,9 @@ namespace AJCHospitalConsol.View
 
 
                 }
-                //else
+            
 
-
-                //{
-                //    if(u) code_user=s ou m
-
-
-                //}
-
-            } while (a1==null);
+            } while (b==null);
 
         }
 
@@ -236,6 +237,7 @@ namespace AJCHospitalConsol.View
           
             Queue<Patient_T> file = new Queue<Patient_T>();
             int rep = 0;
+            int Id_secu = 0;
             Console.WriteLine("Bienvennue " + " "+b.LastName+" "+b.FirstName);
             Patient_T p1 = new Patient_T();
             string confirmation = "o";
@@ -250,7 +252,7 @@ namespace AJCHospitalConsol.View
                     Console.WriteLine("1-Ajouter un patient à la file d'attente");
                     Console.WriteLine("2-Afficher la file d'atttente");
                     Console.WriteLine("3-Afficher le prochain patient de la file d'atttente");
-                    Console.WriteLine("4-Afficher  la liste des visites");
+                    Console.WriteLine("4-Afficher  la liste des visites d'un patient ");
                     Console.WriteLine("5-Quitter");
                     rep = Convert.ToInt32(Console.ReadLine());
 
@@ -312,7 +314,7 @@ namespace AJCHospitalConsol.View
                                 {
                                     try
                                     {
-                                        Console.WriteLine("Securite sociale ? ");
+                                        Console.WriteLine(" Id Securite sociale ? ");
                                         string secu = Console.ReadLine();
                                     
                                         Console.WriteLine("Nom ?");
@@ -366,21 +368,6 @@ namespace AJCHospitalConsol.View
 
 
 
-
-
-                                  
-
-
-
-
-
-
-
-
-
-
-
-
                                 } while (confirmation.ToUpper() != "O");
 
 
@@ -418,10 +405,33 @@ namespace AJCHospitalConsol.View
                         break;
 
                     case 4:
-                      
+                        //try
+                        //{
+                        //    Console.WriteLine("Numéro Securite Sociale du Patient ?");
+                        // Id_secu = Convert.ToInt32(Console.ReadLine());
+
+
+
+                        //    Patient_T p1 = new myController().FindPatient(Id_secu);
+
+
+
+
+
+
+
+                        //}
+                        //catch(FormatException e)
+                        //{
+                        //    Console.WriteLine("Erreur saisie");
+                        //}
+                        
+
+                        //new myController().getPatientConsultation(Id_secu);
+
+
                         break;
-
-
+                        
 
 
 
@@ -455,7 +465,7 @@ namespace AJCHospitalConsol.View
                 Console.WriteLine("****************************************");
 
 
-            } while (rep != 4);
+            } while (rep != 5);
 
 
 

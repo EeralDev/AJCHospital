@@ -31,7 +31,7 @@ namespace AJCHospitalConsol.Logic
         // Propriété statique pour accéder à l'instance unique de l'hôpital
         public static Hospital InstanceHospital => lazyInstanceHospital.Value;
         private string _nameHospital;
-        private QueuePatients _queuePatients;
+        //private QueuePatients _queuePatients;
         //private List<Doctors> _doctorList;
 
         // Les patients sont censés être connu dans les systèmes de
@@ -47,14 +47,14 @@ namespace AJCHospitalConsol.Logic
         //}
         public void DisplayNextPatient()
         {
-            Patient nextPatient = _queuePatients.NextPatient();
+            //Patient nextPatient = _queuePatients.NextPatient();
             // Affiche les informations du prochain patient
-            nextPatient.ToString();
+            //nextPatient.ToString();
         }
         public void DisplayQueuePatients()
         {
             // Utilisation de la méthode ToString de la classe Patient
-            _queuePatients.ToString();
+            //_queuePatients.ToString();
         }
 
         // constructeurs
@@ -68,9 +68,9 @@ namespace AJCHospitalConsol.Logic
             throw new NotImplementedException();
         }
 
-        public void Update(ISubject subject)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Update(ISubject subject)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

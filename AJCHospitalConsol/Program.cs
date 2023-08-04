@@ -9,10 +9,6 @@ namespace AJCHospitalConsol
     internal class Program
     {
         static void Main(string[] args)
-        {
-            new DAL.DALTest().testDAOConsultation();
-            new DAL.DALTest().testDAOPatient();
-            new DAL.DALTest().testDAOUser();
-        }
+        { }
     }
 }

@@ -64,19 +64,28 @@ namespace AJCHospitalConsol.DAL.DOA
         // Mettre a jour le delete pour supprimer les lignes de consultation avant de supprimer les Users
         public int Delete(Patient_T entity)
         {
+            AJCHospitalEntities myDeleteContext = new AJCHospitalEntities();
+            //Suppression des lignes consultation rattaché à l'utilisateur.
+            int result = new DAOConsultation().Delete(myDeleteContext.Patient_T.Find(entity.PatientID).Consultation_T.ToList());
             AJCHospitalEntities myContext = new AJCHospitalEntities();
             myContext.Patient_T.Remove(myContext.Patient_T.Find(entity.PatientID));
-            return myContext.SaveChanges();
+            return myContext.SaveChanges() + result;
         }
 
         public int Delete(List<Patient_T> entities)
         {
+            AJCHospitalEntities myDeleteContext = new AJCHospitalEntities();
+            int result = 0;
+            foreach (Patient_T entity in entities)
+            {
+                result = result + new DAOConsultation().Delete(myDeleteContext.Patient_T.Find(entity.PatientID).Consultation_T.ToList());
+            }
             AJCHospitalEntities myContext = new AJCHospitalEntities();
             foreach (Patient_T entity in entities)
             {
                 myContext.Patient_T.Remove(myContext.Patient_T.Find(entity.PatientID));
             }
-            return myContext.SaveChanges();
+            return myContext.SaveChanges() + result;
         }
     }
 }

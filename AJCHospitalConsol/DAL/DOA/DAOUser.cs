@@ -47,6 +47,7 @@ namespace AJCHospitalConsol.DAL.DOA
         public int Update(User_T entity)
         {
             AJCHospitalEntities myContext = new AJCHospitalEntities();
+            //TODO : Ajouter le liens vers la documentation
             myContext.Entry(myContext.User_T.Find(entity.UserID)).CurrentValues.SetValues(entity);
             return myContext.SaveChanges();
         }
@@ -61,7 +62,6 @@ namespace AJCHospitalConsol.DAL.DOA
             return myContext.SaveChanges();
         }
 
-        // Mettre a jour le delete pour supprimer les lignes de consultation avant de supprimer les Users 
         public int Delete(User_T entity)
         {
             AJCHospitalEntities myDeleteContext = new AJCHospitalEntities();

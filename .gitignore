@@ -12,6 +12,10 @@
 *.edmx.diagram
 *.tt
 *.csproj
+AJCHospital.cs
+Consultation_T.cs
+Patient_T.cs
+User_T.cs
 
 # User-specific files
 *.rsuser

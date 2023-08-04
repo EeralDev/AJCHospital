@@ -55,14 +55,13 @@ namespace AJCHospitalConsol.View
 
         }
 
-        public  void TestConnexion(User a)
+        public  void TestConnexion(User a1)
         {
             string rep = " ";
 
             string login_user;
 
             string password_user;
-            User a1 = new User();
 
             a1 = null;
 

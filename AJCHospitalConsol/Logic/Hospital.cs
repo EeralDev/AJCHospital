@@ -37,5 +37,10 @@ namespace AJCHospitalConsol.Logic
             this._nameHospital = nameHospital;
             //User = new User();
         }
+
+        public void Update(ISubject subject)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

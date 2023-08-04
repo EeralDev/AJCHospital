@@ -1,5 +1,4 @@
-﻿using AJCHospitalConsol.DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,9 @@ namespace AJCHospitalConsol
     {
         static void Main(string[] args)
         {
-            new DALTest().testDAOUser();
+            new DAL.DALTest().testDAOConsultation();
+            new DAL.DALTest().testDAOPatient();
+            new DAL.DALTest().testDAOUser();
         }
     }
 }

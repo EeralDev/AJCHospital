@@ -41,8 +41,8 @@ namespace AJCHospitalConsol.DAL
             //Création de l'objet DAO
             DAOConsultation myDAOConsultation = new DAOConsultation();
             //Creation de la liste d'entité
-            Consultation_T firstConsultation = new Consultation_T { PatID = patients[0].PatientID, DocID = users[0].UserID, StartTime = System.DateTime.Now, EndTime = System.DateTime.Now, Price = 12.3 };
-            Consultation_T secondConsultation = new Consultation_T { PatID = patients[1].PatientID, DocID = users[1].UserID, StartTime = System.DateTime.Now, EndTime = System.DateTime.Now, Price = 12.3 };
+            Consultation_T firstConsultation = new Consultation_T { PatID = patients[0].PatientID,PatSocialSecurityID=patients[0].SocialSecurityID, DocID = users[0].UserID, DocName = users[0].UserName, StartTime = System.DateTime.Now, RoomNumber = 1, Price = 12.3 };
+            Consultation_T secondConsultation = new Consultation_T { PatID = patients[1].PatientID, PatSocialSecurityID = patients[1].SocialSecurityID, DocID = users[1].UserID, DocName = users[1].UserName, StartTime = System.DateTime.Now, RoomNumber = 1, Price = 12.3 };
             List<Consultation_T> consultations = new List<Consultation_T>();
             consultations.Add(firstConsultation);
             consultations.Add(secondConsultation);
@@ -58,9 +58,11 @@ namespace AJCHospitalConsol.DAL
             {
                 Console.WriteLine(item.ConsultationID);
                 Console.WriteLine(item.PatID);
+                Console.WriteLine(item.PatSocialSecurityID);
                 Console.WriteLine(item.DocID);
+                Console.WriteLine(item.DocName);
                 Console.WriteLine(item.StartTime);
-                Console.WriteLine(item.EndTime);
+                Console.WriteLine(item.RoomNumber);
                 Console.WriteLine(item.Price);
             }
             // Modification de la liste de Consultation
@@ -76,9 +78,11 @@ namespace AJCHospitalConsol.DAL
             {
                 Console.WriteLine(item.ConsultationID);
                 Console.WriteLine(item.PatID);
+                Console.WriteLine(item.PatSocialSecurityID);
                 Console.WriteLine(item.DocID);
+                Console.WriteLine(item.DocName);
                 Console.WriteLine(item.StartTime);
-                Console.WriteLine(item.EndTime);
+                Console.WriteLine(item.RoomNumber);
                 Console.WriteLine(item.Price);
             }
             //Suppression du contenu de la BDD
@@ -87,7 +91,7 @@ namespace AJCHospitalConsol.DAL
 
             //Debut des tests sur les méthodes monoligne 
             //Ici on créer le mono Utilisateur
-            Consultation_T mySoloConsultation = new Consultation_T { PatID = patients[1].PatientID, DocID = users[0].UserID, StartTime = System.DateTime.Now, EndTime = System.DateTime.Now, Price = 12.3 };
+            Consultation_T mySoloConsultation = new Consultation_T { PatID = patients[1].PatientID, PatSocialSecurityID = patients[1].SocialSecurityID, DocID = users[0].UserID, DocName = users[0].UserName, StartTime = System.DateTime.Now, RoomNumber=1, Price = 12.3 };
             //Ici on test Insert(T)
             Console.WriteLine("------------------------Ici On Teste Insert(T)-----------------");
             myDAOConsultation.Insert(mySoloConsultation, out int ID);
@@ -102,9 +106,11 @@ namespace AJCHospitalConsol.DAL
             {
                 Console.WriteLine(item.ConsultationID);
                 Console.WriteLine(item.PatID);
+                Console.WriteLine(item.PatSocialSecurityID);
                 Console.WriteLine(item.DocID);
+                Console.WriteLine(item.DocName);
                 Console.WriteLine(item.StartTime);
-                Console.WriteLine(item.EndTime);
+                Console.WriteLine(item.RoomNumber);
                 Console.WriteLine(item.Price);
             }
             //Ici on test Delete(T)

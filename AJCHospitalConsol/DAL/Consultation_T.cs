@@ -16,12 +16,14 @@ namespace AJCHospitalConsol.DAL
     {
         public int ConsultationID { get; set; }
         public int PatID { get; set; }
+        public string PatSocialSecurityID { get; set; }
         public int DocID { get; set; }
+        public string DocName { get; set; }
         public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
+        public int RoomNumber { get; set; }
         public double Price { get; set; }
     
-        public virtual User_T User_T { get; set; }
         public virtual Patient_T Patient_T { get; set; }
+        public virtual User_T User_T { get; set; }
     }
 }

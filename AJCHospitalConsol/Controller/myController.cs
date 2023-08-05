@@ -10,6 +10,7 @@ namespace AJCHospitalConsol.Controller
 {
     public class myController
     {
+
         public User_T Authentication(string userName, string password)
         {
             User_T result = new AJCHospitalEntities().User_T.FirstOrDefault(item => item.UserName == userName && item.Password == password);

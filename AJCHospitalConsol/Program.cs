@@ -17,6 +17,9 @@ namespace AJCHospitalConsol
 
             new DAL.DALTest().testDAOConsultation();
 
+            // Exécution du programme
+
+            Console.BackgroundColor = ConsoleColor.Red;
             new ViewTest().EcranDemmarage();
 
         }

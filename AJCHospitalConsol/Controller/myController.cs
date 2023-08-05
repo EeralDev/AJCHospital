@@ -63,5 +63,47 @@ namespace AJCHospitalConsol.Controller
         {
             return new DAOUser().SelectById(userID).Consultation_T.ToList();
         }
+
+
+
+
+        public Queue<Patient_T> AddPatient(Patient_T patient)
+        {
+        
+            Queue<Patient_T> file = new Queue<Patient_T>();
+            file.Enqueue(patient);
+            return file;
+
+        }
+        public Queue<Patient_T> GetPatient()
+        {
+            Queue<Patient_T> file1 = new Queue<Patient_T>();
+            return file1;
+        }
+
+
+
+       public Patient_T CleanRoom()
+        {
+            Patient_T a = new Patient_T();
+            return a;
+        }
+
+
+      public  Patient_T NextPatient()
+        {
+            Patient_T a = new Patient_T();
+            return a;
+        }
+
+
+        public int SaveConsultationFromView()
+        {
+            return 0;
+        }
+
+
+
+
     }
 }

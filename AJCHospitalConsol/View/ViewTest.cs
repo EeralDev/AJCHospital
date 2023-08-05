@@ -1,8 +1,10 @@
 ﻿using AJCHospitalConsol.Controller;
 using AJCHospitalConsol.DAL;
+using AJCHospitalConsol.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,80 +17,63 @@ namespace AJCHospitalConsol.View
         public void EcranDemmarage()
         {
 
-
-
             Console.WriteLine("*************** HOPITAL******************");
-
-            int nb1;
-            string login_user = "df";
-            string mp_user = "15465";
+            int nb1 = 0;           
             bool sortie = false;
             do
             {
-                Console.WriteLine("1-Connexion");
-                Console.WriteLine("2-Quitter");
-                nb1 = Convert.ToInt32(Console.ReadLine());
-             
 
+                try
+                {
+                    Console.WriteLine("1-Connexion");
+                    Console.WriteLine("2-Quitter");
+                    nb1 = Convert.ToInt32(Console.ReadLine());
+                }
+                catch(FormatException )
+                {
+                    Console.WriteLine("Erreur de saisie");
+                }
+            
                 if (nb1 == 2)
                 {
-
                     sortie = true;
                 }
-
-
-
-
-
-
-
 
                 if (nb1 == 1)
                 {
                    
                     //  ecranConnexion();
-                    TestConnexion(null);
+                    TestConnexion();
                 }
 
 
-            } while ((nb1!=2||sortie == false));
-
+            } while (sortie == false);
         }
 
-        public  void TestConnexion(User a)
+        public  void TestConnexion()
         {
-            string rep = " ";
+          
 
             string login_user;
 
             string password_user;
-            User a1 = new User();
-
-            a1 = null;
 
 
+            Queue<Patient_T> file = new Queue<Patient_T>();
 
             //test authenitfiaction
 
             User_T b  = new User_T();
 
             do
-            {
-
-
-              
-                
+            {  
                     Console.WriteLine("Entrez votre login");
                     login_user = Console.ReadLine();
                     Console.WriteLine("Entrez votre mot de passe");
                     password_user = Console.ReadLine();
                     b = new myController().Authentication(login_user, password_user);
-                    Console.WriteLine(b == null);
-                    Console.ReadLine();
-                
-
-
-               
+                 
+         
                 if (b == null)
                 {
 
@@ -100,48 +85,43 @@ namespace AJCHospitalConsol.View
 
 
 
-
-
-
-
-
-                if (b.EmpCode.Equals("0") )   //test objet user ! null code_user=secretaire
+                else
                 {
-                    ecranSecretaire(b);
+
+
+
+
+                    if (b.EmpCode.Equals("0"))   //test objet user ! null code_user=secretaire
+                    {
+                        ecranSecretaire(b);
+                    }
+
+                    //SI TEST OK 
+
+                    if (b.EmpCode.Equals("1"))
+                    {
+                        ecranMedecin(b);
+                    }
+
+
                 }
-                //SI TEST OK 
+            
 
-                if (b.EmpCode.Equals("1"))
-                {
-                    ecranMedecin(b);
-                }
-                //else
-
-
-                //{
-                //    if(u) code_user=s ou m
-
-
-                //}
-
-            } while (a1 == null);
+            } while (b==null);
 
         }
 
-
-
         public  void ecranMedecin(User_T a)
         {
-            int c = 1;
+         
             int rep = 0;
             Console.WriteLine("Bienvennue " + " "+a.LastName + " " + a.FirstName);
 
 
 
 
-
-
-
+            Queue<Patient_T> file = new Queue<Patient_T>();
+            Patient_T p1 = new Patient_T();
 
             do
             {
@@ -149,16 +129,16 @@ namespace AJCHospitalConsol.View
                 try
                 {
                     Console.WriteLine("1-Rendre la salle dispo ");
-                    Console.WriteLine("2-Afficher la file d'atttente");
+                    Console.WriteLine("2-Afficher la file d'attente");
                     Console.WriteLine("3-Sauvegarder les visites");
-                    Console.WriteLine("4-Afficher file d'attente");
-                    Console.WriteLine("5-Afficher  la liste des visites");
-                    Console.WriteLine("6-Quitter");
+              
+                    Console.WriteLine("4-Afficher  la liste des visites");
+                    Console.WriteLine("5-Quitter");
 
                     rep = Convert.ToInt32(Console.ReadLine());
 
                 }
-                catch (FormatException e)
+                catch (FormatException )
                 {
                     Console.WriteLine("Erreur de saisie");
 
@@ -170,22 +150,30 @@ namespace AJCHospitalConsol.View
                 switch (rep)
                 {
                     case 1:
-                        Console.WriteLine("Un patient à été  à la file ");
+                        Console.WriteLine("1-Rendre la salle dispo");
+                        p1 = new myController().CleanRoom();
+                     //afficher patient
+
+
+
                         break;
                     case 2:
-                        Console.WriteLine("Affichage ");
+                        Console.WriteLine("Afficher la file d'atttente");
+
+                        file = new myController().GetPatient();
+
                         break;
                     case 3:
-                        Console.WriteLine("Affichage prochain patient file ");
+                        Console.WriteLine("Sauvegarder les visites ");
+                        int S = new myController().SaveConsultationFromView();
+                       // int SaveConsultation//
                         break;
+                  
                     case 4:
-
+                        Console.WriteLine("Afficher la liste des visites ");
                         break;
+
                     case 5:
-
-                        break;
-
-                    case 6:
                         Console.WriteLine("Quitter ");
                         EcranDemmarage();
                         break;
@@ -197,23 +185,13 @@ namespace AJCHospitalConsol.View
 
 
                         break;
-
-
-
-
-
-
-
-
-
-
                 }
 
 
                 Console.WriteLine("****************************************");
 
 
-            } while (rep != 4);
+            } while (rep != 5);
 
         }
 
@@ -222,10 +200,11 @@ namespace AJCHospitalConsol.View
 
         public  void ecranSecretaire(User_T b)
         {
-            int c = 1;
-            int rep = 0;
-            Console.WriteLine("Bienvennue " + " "+b.LastName+" "+b.FirstName);
           
+            Queue<Patient_T> file = new Queue<Patient_T>();
+            int rep = 0;        
+            Console.WriteLine("Bienvennue " + " "+b.LastName+" "+b.FirstName);
+            Patient_T p1 = new Patient_T();
             string confirmation = "o";
 
             do
@@ -233,30 +212,18 @@ namespace AJCHospitalConsol.View
 
                 try
                 {
-
-
                     Console.WriteLine("1-Ajouter un patient à la file d'attente");
                     Console.WriteLine("2-Afficher la file d'atttente");
                     Console.WriteLine("3-Afficher le prochain patient de la file d'atttente");
-                    Console.WriteLine("4-Quitter");
+                    Console.WriteLine("4-Afficher  la liste des visites d'un patient ");
+                    Console.WriteLine("5-Quitter");
                     rep = Convert.ToInt32(Console.ReadLine());
-
-
-
                 }
                 catch (FormatException e)
                 {
                     Console.WriteLine("Erreur de saisie");
 
-
-
-
                 }
-
-
-
-
-
                 switch (rep)
                 {
                     case 1:
@@ -278,17 +245,15 @@ namespace AJCHospitalConsol.View
 
                         {
                             //AJOUT PATIENT
-                            Console.WriteLine("Un patient à été  à la file ");
+                            Console.WriteLine("Un patient à été ajouter à la file ");
+                            file = new myController().AddPatient(p);
+
                         }
                         else
                         {
 
                             Console.WriteLine("Le patient n'a pas été trouvé dans la base,voulez vous le creé   O/N ? ");
                             string reponse = Console.ReadLine();
-
-
-
-
 
                             if (reponse.ToUpper() == "O")
                             {
@@ -297,7 +262,7 @@ namespace AJCHospitalConsol.View
                                 {
                                     try
                                     {
-                                        Console.WriteLine("Securite sociale ? ");
+                                        Console.WriteLine(" Id Securite sociale ? ");
                                         string secu = Console.ReadLine();
                                     
                                         Console.WriteLine("Nom ?");
@@ -316,19 +281,6 @@ namespace AJCHospitalConsol.View
                                         Console.WriteLine("Adresse?");
 
                                         string Adresse = Console.ReadLine();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                         Console.WriteLine("Souhaitez-vous confirmez O/N ? ");
                                         confirmation = Console.ReadLine().ToUpper();
@@ -351,21 +303,6 @@ namespace AJCHospitalConsol.View
 
 
 
-
-
-                                  
-
-
-
-
-
-
-
-
-
-
-
-
                                 } while (confirmation.ToUpper() != "O");
 
 
@@ -375,27 +312,27 @@ namespace AJCHospitalConsol.View
 
                         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                         break;
                     case 2:
                         Console.WriteLine("Affichage ");
+
+                        file = new myController().GetPatient();
+
                         break;
                     case 3:
                         Console.WriteLine("Affichage prochain patient file ");
+
+                        p1 = new myController().NextPatient();
+                        //Patient NextPatient
                         break;
+
                     case 4:
+                     
+
+                        break;
+                       
+            
+                    case 5:
                         Console.WriteLine("Quitter ");
                         EcranDemmarage();
                         break;
@@ -406,48 +343,15 @@ namespace AJCHospitalConsol.View
 
                         break;
 
-
-
-
-
-
-
-
-
-
                 }
 
 
                 Console.WriteLine("****************************************");
 
 
-            } while (rep != 4);
-
-
-
-
-
-
-
-
+            } while (rep != 5);
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      
-
 
     }
 

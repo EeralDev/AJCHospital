@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AJCHospitalConsol.Logic
 {
-    internal class Rooms : IObserver
+    internal class Rooms
     {
         //Attribut propre au métiers 
 
@@ -21,12 +21,11 @@ namespace AJCHospitalConsol.Logic
             get { return _myRoomArray ;} 
             set { _myRoomArray = value ;}
         }
-
         //Méthode métiers
 
         public Rooms()
         {
-            this._myRoomArray= null;
+            this._myRoomArray = new Room[] { null, null };
         }
         //Lorsqu'un Docteur se connecte
         public void AddRoom(User_T doctor, Hospital hospital)
@@ -36,20 +35,22 @@ namespace AJCHospitalConsol.Logic
         }
 
         //Lorsque'un Docteur se déconnecte 
-        //public void CloseRoom(User_T mondoctor)
-        //{
-        //    this._myRoomArray.Firstouroom.monDoctor() == null;
-        //}
+        public void CloseRoom(User_T myDoctor)
+        {
+            // on cherche l'index du tableau MyRoomArray ou l'UserId du docteur
+            // corrrespond a celui de la salle, on le met à null
+            this._myRoomArray[Array.FindIndex(this.MyRoomArray,
+                item => item.RoomDoctor.UserID == myDoctor.UserID)] = null;
+        }
 
         // Méthode propre a IObserver
-        //void Update(Hospital hospital)
-        //{
-        //    int indexFirst = Array.FindIndex(item => item.patient == null);
-        //    this._myRoomArray.first().startConsultation();
-        //}
-        public void Update(ISubject subject)
+        public void Update(Hospital hospital)
         {
-            throw new NotImplementedException();
-        }
+            // on cherchd lindex de MyRoomArray ou la salle du patient vaut null
+            // et lui notifie : de notifier l'hopital pour commencer une consultation
+            int indexFirst = Array.FindIndex(MyRoomArray, item => item.RoomPatient == null);
+            this.MyRoomArray[indexFirst].StartConsultation();
+          }
+
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AJCHospitalConsol.Logic
 {
-    internal class Room : ISubject
+    internal class Room
     {
         // Attributs propre métier
 
@@ -30,7 +30,6 @@ namespace AJCHospitalConsol.Logic
             get { return _roomNumber; }
             set { _roomNumber = value; }
         }
-
         public Patient_T RoomPatient
         {
             get { return _roomPatient; }
@@ -39,7 +38,11 @@ namespace AJCHospitalConsol.Logic
         public User_T RoomDoctor { get { return _roomDoctor; } }
 
         public Double Price { get { return _price; } }
-        public Consultation_T[] ConsultationArray { get { return _consultationArray;  } }
+        public Consultation_T[] ConsultationArray
+        { 
+          get { return _consultationArray;  }
+          set {  _consultationArray = value; }
+        }
         public Consultation_T CurrentConsultation { get { return _currentConsultation; } }
 
         public Hospital MyHospital { get { return _myHospital; } }
@@ -64,47 +67,63 @@ namespace AJCHospitalConsol.Logic
         // Méthode propre au métier
         public Room(int RoomNumber, User_T myDoctor, Hospital hospital)
         {
+            // Initialisation de ConsultationArray a 10 element null :
+            ConsultationArray = new Consultation_T [] 
+            { null, null, null , null , null , null, null , null , null , null};
             this._roomNumber = RoomNumber;
             this._roomDoctor = myDoctor;
             this.Attach(hospital);
             this.StartConsultation();
         }
         //Ne pas oublier la situation ou il n'y a pas de patient dans l'hopital
+        // this.notify , le patient reste a null ceci implique if(patient !== null)
+        // je cré ma consulation sinon rien
         public void StartConsultation()
         {
             this.Notify();
-            //Construction d'objet en inline cad relié directement à la base de données crée par EF
-            this._currentConsultation = new Consultation_T
+            if (RoomPatient != null)
             {
-                PatID = _roomPatient.PatientID,
-                PatSocialSecurityID = _roomPatient.SocialSecurityID,
-                DocID = RoomDoctor.UserID,
-                DocName = _roomDoctor.UserName,
-                StartTime = System.DateTime.Now,
-                RoomNumber = this._roomNumber,
-                Price = this.Price
-            };
+                //Construction d'objet en inline cad relié directement à la base de données crée par EF
+                this._currentConsultation = new Consultation_T
+                {
+                    PatID = _roomPatient.PatientID,
+                    PatSocialSecurityID = _roomPatient.SocialSecurityID,
+                    DocID = RoomDoctor.UserID,
+                    DocName = _roomDoctor.UserName,
+                    StartTime = System.DateTime.Now,
+                    RoomNumber = this._roomNumber,
+                    Price = this.Price
+                };
+            }
         }
-
-        //Que se passe-t-il lorsque ConsultationArray est plein
+   
         public void EndConsultation()
         {
-            int indexNull= ConsultationArray.ToList().FindIndex(consultation => consultation == null);
+            // situation ou consulation array est plein :
+            // le booléen est a true, je parcours l'array ConsultationArray pour voir si il est plein
+
+            bool isConsulArrayFull = true;
+
+            foreach(Consultation_T consultation_T in ConsultationArray)
+            {
+                if(consultation_T is null)
+                {
+                    isConsulArrayFull = false; break;
+                }
+            }
+            if(isConsulArrayFull)
+            {
+                RecordConsultation();
+            }
+            int indexNull= Array.FindIndex(ConsultationArray,consultation => consultation == null);
             this.ConsultationArray[indexNull] = this.CurrentConsultation;
             this.StartConsultation();
         }
         public void RecordConsultation()
         {
             new myController().SaveConsultation(ConsultationArray.ToList());
-            ConsultationArray[ConsultationArray.Length - 1] = null;
-        }
-        public void Attach(IObserver observer)
-        {
-            throw new NotImplementedException();
-        }
-        public void Detach(IObserver observer)
-        {
-            throw new NotImplementedException();
+            ConsultationArray = new Consultation_T[]
+           { null, null, null , null , null , null, null , null , null , null}; 
         }
     }
 }

@@ -11,7 +11,6 @@ namespace AJCHospitalConsol.Logic
         // Receive update from subject
         void Update(ISubject subject);
     }
-
     internal interface ISubject
     {
         // Attach an observer to the subject.

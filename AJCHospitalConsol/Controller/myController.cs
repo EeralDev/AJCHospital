@@ -19,7 +19,7 @@ namespace AJCHospitalConsol.Controller
         public Patient_T CreateNewPatient(string socialSecurityID, string firstName, string lastName, int Age, string Adress)
         { 
             DAOPatient DAOPatient = new DAOPatient();
-            DAOPatient.Insert(new Patient_T { SocialSecurityID=socialSecurityID, FirstName=firstName, LastName=lastName, Age=Age, Adress=Adress}, out int ID);
+            DAOPatient.Insert(new Patient_T {SocialSecurityID=socialSecurityID, FirstName=firstName, LastName=lastName, Age=Age, Adress=Adress}, out int ID);
             return DAOPatient.SelectById(ID);
         }
 

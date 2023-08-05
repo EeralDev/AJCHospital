@@ -11,19 +11,13 @@ namespace AJCHospitalConsol
     {
         static void Main(string[] args)
         {
-            //new DAL.DALTest().testDAOUser();
+            new DAL.DALTest().testDAOUser();
 
-            //new DAL.DALTest().testDAOPatient();
+            new DAL.DALTest().testDAOPatient();
 
-            //new DAL.DALTest().testDAOConsultation();
-
+            new DAL.DALTest().testDAOConsultation();
 
             new ViewTest().EcranDemmarage();
-
-
-
-
-
 
         }
     }

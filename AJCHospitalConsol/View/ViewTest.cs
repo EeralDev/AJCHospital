@@ -17,12 +17,8 @@ namespace AJCHospitalConsol.View
         public void EcranDemmarage()
         {
 
-
-
             Console.WriteLine("*************** HOPITAL******************");
-
-            int nb1 = 0; 
-           
+            int nb1 = 0;           
             bool sortie = false;
             do
             {
@@ -38,20 +34,10 @@ namespace AJCHospitalConsol.View
                     Console.WriteLine("Erreur de saisie");
                 }
             
-
-
                 if (nb1 == 2)
                 {
-
                     sortie = true;
                 }
-
-
-
-
-
-
-
 
                 if (nb1 == 1)
                 {
@@ -62,7 +48,6 @@ namespace AJCHospitalConsol.View
 
 
             } while (sortie == false);
-
         }
 
         public  void TestConnexion()
@@ -81,21 +66,14 @@ namespace AJCHospitalConsol.View
             User_T b  = new User_T();
 
             do
-            {
-
-
-              
-                
+            {  
                     Console.WriteLine("Entrez votre login");
                     login_user = Console.ReadLine();
                     Console.WriteLine("Entrez votre mot de passe");
                     password_user = Console.ReadLine();
                     b = new myController().Authentication(login_user, password_user);
                  
-                 
-
-
-
+         
                 if (b == null)
                 {
 
@@ -133,8 +111,6 @@ namespace AJCHospitalConsol.View
 
         }
 
-
-
         public  void ecranMedecin(User_T a)
         {
          
@@ -162,7 +138,7 @@ namespace AJCHospitalConsol.View
                     rep = Convert.ToInt32(Console.ReadLine());
 
                 }
-                catch (FormatException e)
+                catch (FormatException )
                 {
                     Console.WriteLine("Erreur de saisie");
 
@@ -194,7 +170,7 @@ namespace AJCHospitalConsol.View
                         break;
                   
                     case 4:
-
+                        Console.WriteLine("Afficher la liste des visites ");
                         break;
 
                     case 5:
@@ -209,23 +185,13 @@ namespace AJCHospitalConsol.View
 
 
                         break;
-
-
-
-
-
-
-
-
-
-
                 }
 
 
                 Console.WriteLine("****************************************");
 
 
-            } while (rep != 4);
+            } while (rep != 5);
 
         }
 
@@ -236,8 +202,7 @@ namespace AJCHospitalConsol.View
         {
           
             Queue<Patient_T> file = new Queue<Patient_T>();
-            int rep = 0;
-            int Id_secu = 0;
+            int rep = 0;        
             Console.WriteLine("Bienvennue " + " "+b.LastName+" "+b.FirstName);
             Patient_T p1 = new Patient_T();
             string confirmation = "o";
@@ -247,31 +212,18 @@ namespace AJCHospitalConsol.View
 
                 try
                 {
-
-
                     Console.WriteLine("1-Ajouter un patient à la file d'attente");
                     Console.WriteLine("2-Afficher la file d'atttente");
                     Console.WriteLine("3-Afficher le prochain patient de la file d'atttente");
                     Console.WriteLine("4-Afficher  la liste des visites d'un patient ");
                     Console.WriteLine("5-Quitter");
                     rep = Convert.ToInt32(Console.ReadLine());
-
-
-
                 }
                 catch (FormatException e)
                 {
                     Console.WriteLine("Erreur de saisie");
 
-
-
-
                 }
-
-
-
-
-
                 switch (rep)
                 {
                     case 1:
@@ -303,10 +255,6 @@ namespace AJCHospitalConsol.View
                             Console.WriteLine("Le patient n'a pas été trouvé dans la base,voulez vous le creé   O/N ? ");
                             string reponse = Console.ReadLine();
 
-
-
-
-
                             if (reponse.ToUpper() == "O")
                             {
 
@@ -333,19 +281,6 @@ namespace AJCHospitalConsol.View
                                         Console.WriteLine("Adresse?");
 
                                         string Adresse = Console.ReadLine();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                         Console.WriteLine("Souhaitez-vous confirmez O/N ? ");
                                         confirmation = Console.ReadLine().ToUpper();
@@ -377,19 +312,6 @@ namespace AJCHospitalConsol.View
 
                         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                         break;
                     case 2:
                         Console.WriteLine("Affichage ");
@@ -405,40 +327,11 @@ namespace AJCHospitalConsol.View
                         break;
 
                     case 4:
-                        //try
-                        //{
-                        //    Console.WriteLine("Numéro Securite Sociale du Patient ?");
-                        // Id_secu = Convert.ToInt32(Console.ReadLine());
-
-
-
-                        //    Patient_T p1 = new myController().FindPatient(Id_secu);
-
-
-
-
-
-
-
-                        //}
-                        //catch(FormatException e)
-                        //{
-                        //    Console.WriteLine("Erreur saisie");
-                        //}
-                        
-
-                        //new myController().getPatientConsultation(Id_secu);
-
+                     
 
                         break;
-                        
-
-
-
-
                        
-
-
+            
                     case 5:
                         Console.WriteLine("Quitter ");
                         EcranDemmarage();
@@ -450,15 +343,6 @@ namespace AJCHospitalConsol.View
 
                         break;
 
-
-
-
-
-
-
-
-
-
                 }
 
 
@@ -467,31 +351,7 @@ namespace AJCHospitalConsol.View
 
             } while (rep != 5);
 
-
-
-
-
-
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      
-
 
     }
 

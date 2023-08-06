@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AJCHospitalConsol.Logic
 {
-    internal class Room
+    public class Room
     {
         // Attributs propre métier
 
@@ -50,17 +50,14 @@ namespace AJCHospitalConsol.Logic
         // méthode ISubject
         public void Attach(Hospital hospital)
         {
-            Console.WriteLine("Je suis la méthode attach de room qui attache un hopital");
             this._myHospital = hospital;
         }
         public void Detach(Hospital hospital)
         {
-            Console.WriteLine("Je suis la méthode detach de room qui detache un hopital");
             this._myHospital = null;
         }
         public void Notify()
         {
-            Console.WriteLine("Je suis la méthode notify de room qui notifie mon hopital");
             this._myHospital.Update(this);
         }
 
@@ -83,7 +80,9 @@ namespace AJCHospitalConsol.Logic
             this.Notify();
             if (RoomPatient != null)
             {
-                //Construction d'objet en inline cad relié directement à la base de données crée par EF
+                //Construction d'objet en inline c'est a dire en une ligne. La Liaison avec la
+                //base est facilité par l'utilisation
+                //du type Consultation_T
                 this._currentConsultation = new Consultation_T
                 {
                     PatID = _roomPatient.PatientID,
@@ -101,9 +100,7 @@ namespace AJCHospitalConsol.Logic
         {
             // situation ou consulation array est plein :
             // le booléen est a true, je parcours l'array ConsultationArray pour voir si il est plein
-
             bool isConsulArrayFull = true;
-
             foreach(Consultation_T consultation_T in ConsultationArray)
             {
                 if(consultation_T is null)
@@ -119,11 +116,12 @@ namespace AJCHospitalConsol.Logic
             this.ConsultationArray[indexNull] = this.CurrentConsultation;
             this.StartConsultation();
         }
-        public void RecordConsultation()
+        public int RecordConsultation()
         {
-            new myController().SaveConsultation(ConsultationArray.ToList());
+            int numberOfRow = new myController().SaveConsultation(ConsultationArray.Where(item => item != null).ToList());
             ConsultationArray = new Consultation_T[]
-           { null, null, null , null , null , null, null , null , null , null}; 
+            { null, null, null , null , null , null, null , null , null , null};
+            return numberOfRow;
         }
     }
 }

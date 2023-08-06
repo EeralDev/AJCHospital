@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AJCHospitalConsol.Logic
 {
-    internal class Rooms
+    public class Rooms
     {
         //Attribut propre au métiers 
 
@@ -31,7 +31,7 @@ namespace AJCHospitalConsol.Logic
         public void AddRoom(User_T doctor, Hospital hospital)
         {
             int indexFirstFree = Array.FindIndex(MyRoomArray, element => element == null);
-            this._myRoomArray[indexFirstFree] = new Room(indexFirstFree, doctor, hospital);
+            this._myRoomArray[indexFirstFree] = new Room(indexFirstFree + 1, doctor, hospital);
         }
 
         //Lorsque'un Docteur se déconnecte 
@@ -39,8 +39,9 @@ namespace AJCHospitalConsol.Logic
         {
             // on cherche l'index du tableau MyRoomArray ou l'UserId du docteur
             // corrrespond a celui de la salle, on le met à null
-            this._myRoomArray[Array.FindIndex(this.MyRoomArray,
-                item => item.RoomDoctor.UserID == myDoctor.UserID)] = null;
+            int myIndex = Array.FindIndex(this.MyRoomArray, item => item.RoomDoctor.UserID == myDoctor.UserID);
+            this._myRoomArray[myIndex].RecordConsultation();
+            this._myRoomArray[myIndex] = null;
         }
 
         // Méthode propre a IObserver

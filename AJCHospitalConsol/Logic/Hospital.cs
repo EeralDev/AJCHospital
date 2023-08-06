@@ -11,7 +11,7 @@ namespace AJCHospitalConsol.Logic
     // et l'Hospital est observé par les salles.
     // L'Hospital est unique : un singleton en mode thread safe et utilise Lazy
 
-    internal class Hospital
+    public class Hospital
     {
         //la classe Hopital utilise le modèle Singleton avec un verrouillage
         //explicite pour garantir un accès thread-safe à la liste de patients.
@@ -26,7 +26,8 @@ namespace AJCHospitalConsol.Logic
         private string _nameHospital;
         private User_T secretary;
 
-        private Queue<Patient_T> Patients { get; set; }
+        private Queue<Patient_T> _patients; 
+        public Queue<Patient_T> Patients { get => _patients; set => _patients=value; }
 
         //Attribut propre au ISubject => l'observer a notifier
 
@@ -46,9 +47,10 @@ namespace AJCHospitalConsol.Logic
         // constructeurs
         private Hospital()
         {
-            this._nameHospital = "MyHospital";
+            this._nameHospital = "BIMHospital";
             // initialisation de l'attribut Patients à une liste de patients vide
-            Queue<Patient_T> Patients = new Queue<Patient_T>();
+            this.Patients = new Queue<Patient_T>();
+            this.Rooms = new Rooms();
         }
         // Propriété statique pour accéder à l'instance unique de l'hôpital
         public static Hospital Instance => lazyInstanceHospital.Value;
@@ -58,25 +60,27 @@ namespace AJCHospitalConsol.Logic
         // Ne pas oublier les autres situation ex : il n'y a aucun Patient en fil d'attente
         public void Update(Room NotifyRoom)
         {
-            Console.WriteLine("Je suis la méthode Update de Hopital qui met à jour ma room");
-            NotifyRoom.RoomPatient = null;
-            NotifyRoom.RoomPatient= Patients.Dequeue();
+            if (Patients.Count > 0)
+            {
+                NotifyRoom.RoomPatient = Patients.Dequeue();
+            }
+            else
+            {
+                NotifyRoom.RoomPatient = null;
+            }
         }
         //Méthode propre à ISubject avec comme observateur Rooms
         // Que faire lorsque un room est déjà attacher ou qu'il est déja null
         public void Attach(Rooms rooms)
         {
-            Console.WriteLine("Je suis la méthode attach de Hospital qui attache un Rooms");
             this._rooms = rooms;
         }
         public void Detach(Hospital hospital)
         {
-            Console.WriteLine("Je suis la méthode detach de Hospital qui detache un Rooms");
             this._rooms = null;
         }
         public void Notify()
         {
-            Console.WriteLine("Je suis la méthode notify de Hospital qui notifie mon rooms");
             this._rooms.Update(this);
         }
         // Méthode métiers
@@ -90,7 +94,7 @@ namespace AJCHospitalConsol.Logic
         {
             this.secretary = null;
         }
-        // Méthode métiers en lien avec la Queue<Patient_T>
+        //Méthode métiers en lien avec la Queue<Patient_T>
         //Penser au situation ou patient etc ...
         //NextPatient retire l'élément en tête de la file d'attente
         //Si file d'attente vide et que vous appelez la méthode Dequeue(), 

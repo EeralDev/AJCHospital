@@ -33,7 +33,6 @@ namespace AJCHospitalConsol.DAL.DOA
             foreach (Consultation_T entity in entities)
             {
                 myContext.Consultation_T.Add(entity);
-
             }
             int result = myContext.SaveChanges();
             IDs = new List<int>();

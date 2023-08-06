@@ -203,8 +203,15 @@ namespace AJCHospitalConsol.View
                         if (p!=null)
                         {
                             //AJOUT PATIENT
-                            Console.WriteLine("Un patient à été ajouté à la file ");
-                            currentPatientQueue = this.Controller.AddPatient(p);
+                            if (this.Controller.GetPatient().FirstOrDefault(item => item.PatientID == p.PatientID) != default(Patient_T))
+                            {
+                                Console.WriteLine("Le patient est déjà en file d'attente.");
+                            }
+                            else 
+                            {
+                                Console.WriteLine("Un patient à été ajouté à la file ");
+                                currentPatientQueue = this.Controller.AddPatient(p);
+                            }
                             Console.WriteLine("Etat de la file d'attente : ");
                             foreach (Patient_T item in currentPatientQueue)
                             {
@@ -277,8 +284,7 @@ namespace AJCHospitalConsol.View
                             Console.WriteLine("Il n'y a aucun patient dans la file d'attente");
                         }
                         break;
-                    case 3:
-                        
+                    case 3:                        
                         if (this.Controller.NextPatient() != null)
                         {
                             Console.WriteLine("Le prochain patient dans la file est :");

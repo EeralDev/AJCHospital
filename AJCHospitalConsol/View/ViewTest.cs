@@ -106,7 +106,11 @@ namespace AJCHospitalConsol.View
                     Console.WriteLine("3-Sauvegarder les visites");              
                     Console.WriteLine("4-Afficher la liste des visites");
                     Console.WriteLine("5-Quitter");
+                    Console.WriteLine("Votre premier patient : ");
+                    DisplayPatient(this.Controller.MyHospital.Rooms.MyRoomArray[Array.FindIndex(this.Controller.MyHospital.Rooms.MyRoomArray,
+                        item => item.RoomDoctor.UserID == a.UserID)].RoomPatient);
                     rep = Convert.ToInt32(Console.ReadLine());
+
                 }
                 catch (FormatException )
                 {
@@ -274,8 +278,16 @@ namespace AJCHospitalConsol.View
                         }
                         break;
                     case 3:
-                        Console.WriteLine("Le prochain patient dans la file est :");
-                        DisplayPatient(this.Controller.NextPatient());
+                        
+                        if (this.Controller.NextPatient() != null)
+                        {
+                            Console.WriteLine("Le prochain patient dans la file est :");
+                            DisplayPatient(this.Controller.NextPatient());
+                        }
+                        else
+                        {
+                            Console.WriteLine("La file d'attente est vide.");
+                        }
                         //Patient NextPatient
                         break;
                     case 4:
@@ -322,7 +334,7 @@ namespace AJCHospitalConsol.View
                 $"Nom de famille :{patient.LastName}\n" +
                 $"Âge :{patient.Age}\n" +
                 $"Adresse :{patient.Adress}\n" +
-                $"Téléphone :{patient.Tel}\n");
+                $"Téléphone :{patient.Tel}");
         }
 
         public void DisplayConsultation(Consultation_T consultation)

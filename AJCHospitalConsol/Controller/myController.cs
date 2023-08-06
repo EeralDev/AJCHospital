@@ -72,22 +72,18 @@ namespace AJCHospitalConsol.Controller
             List<Patient_T> patients = new DAOPatient().SelectAll().Where(item => item.LastName == lastName && item.FirstName == firstName).ToList();
             return (patients.Count == 0)? null :patients;
         }
-        //TODO : A tester
         public int SaveConsultation(Consultation_T consultation)
         {
             return new DAOConsultation().Insert(consultation, out int ID);
         }
-        //TODO : A tester
         public int SaveConsultation(List<Consultation_T> consultations)
         {
             return new DAOConsultation().Insert(consultations, out List<int> IDs);
         }
-        //TODO : A tester
         public List<Consultation_T> getPatientConsultation (int patientID)
         {
             return new DAOPatient().SelectById(patientID).Consultation_T.ToList();
         }
-        //TODO : A tester
         public List<Consultation_T> getDoctorConsultation(int userID)
         {
             return new DAOUser().SelectById(userID).Consultation_T.ToList();

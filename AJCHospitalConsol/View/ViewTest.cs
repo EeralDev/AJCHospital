@@ -106,9 +106,17 @@ namespace AJCHospitalConsol.View
                     Console.WriteLine("3-Sauvegarder les visites");              
                     Console.WriteLine("4-Afficher la liste des visites");
                     Console.WriteLine("5-Quitter");
-                    Console.WriteLine("Votre premier patient : ");
-                    DisplayPatient(this.Controller.MyHospital.Rooms.MyRoomArray[Array.FindIndex(this.Controller.MyHospital.Rooms.MyRoomArray,
-                        item => item.RoomDoctor.UserID == a.UserID)].RoomPatient);
+                    // TODO corriger le problème de l'absence de patient
+                    int myIndex = Array.FindIndex(this.Controller.MyHospital.Rooms.MyRoomArray, item => item.RoomDoctor.UserID == a.UserID);
+                    if (this.Controller.MyHospital.Rooms.MyRoomArray[myIndex].RoomPatient != null)
+                    {
+                        Console.WriteLine("Votre patient : ");
+                        DisplayPatient(this.Controller.MyHospital.Rooms.MyRoomArray[myIndex].RoomPatient);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Vous n'avez aucun patient dans votre salle.");
+                    }
                     rep = Convert.ToInt32(Console.ReadLine());
 
                 }
